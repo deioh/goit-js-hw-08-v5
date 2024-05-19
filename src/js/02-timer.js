@@ -54,9 +54,14 @@ buttonStart.addEventListener('click', () => {
   const currentDateMs = Date.now();
   let ticker = futureDateMs - currentDateMs;
 
-  setInterval(() => {
+  const intervalId = setInterval(() => {
     ticker -= 1000;
+    console.log(ticker);
     console.log('tickerId:', convertMs(ticker));
+    // Check condition to end the interval
+    if (ticker <= 0) {
+      clearInterval(intervalId); // End the interval
+    }
   }, 1000);
 });
 
