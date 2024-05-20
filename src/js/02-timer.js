@@ -3,11 +3,13 @@ const buttonStart = document.querySelector('button[data-start]');
 const spanElementValue = document.getElementsByClassName('value');
 buttonDisabled(true);
 
-Notiflix.Confirm.init({
-  width: '320px',
-  messageMaxLength: 1923,
-  plainText: true,
-});
+// Notiflix.Confirm.init({
+//   width: '320px',
+//   messageMaxLength: 1923,
+//   plainText: true,
+// });
+
+//Notiflix.Notify.warning('Memento te hominem esse');
 
 // Set up options for the flatpickr date picker
 const options = {
@@ -37,8 +39,8 @@ const options = {
       // Log that the input date is not in the future
       console.log('Input date is not in the future');
       // Display an alert to the user
-      Notiflix.Notify.warning('Memento te hominem esse');
-      //alert('Please choose a date in the future');
+
+      alert('Please choose a date in the future');
       // Prevent the button from being enabled
       return;
     }
