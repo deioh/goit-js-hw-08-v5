@@ -1,6 +1,8 @@
+import Notiflix from 'notiflix';
+
 const inputDate = document.getElementById('datetime-picker');
 const buttonStart = document.querySelector('button[data-start]');
-const fp = flatpickr('#datetime-picker', {}); // flatpickr
+const spanElementValue = document.getElementsByClassName('value');
 buttonDisabled(true);
 
 // Set up options for the flatpickr date picker
@@ -31,7 +33,8 @@ const options = {
       // Log that the input date is not in the future
       console.log('Input date is not in the future');
       // Display an alert to the user
-      alert('Please choose a date in the future');
+      Notiflix.Notify.warning('Memento te hominem esse');
+      //alert('Please choose a date in the future');
       // Prevent the button from being enabled
       return;
     }
@@ -46,32 +49,56 @@ const options = {
 // Initialize the flatpickr date picker
 flatpickr('#datetime-picker', options);
 
-buttonStart.addEventListener('click', () => {
-  // Convert the input value to a Date object
-  //const mstest = new Date(inputDate.value);
+// event listeners
 
+let intervalId = null;
+buttonStart.addEventListener('click', () => {
+  console.log('Checking if intervalId is truthy');
+  if (intervalId) {
+    console.log('intervalId is truthy, clearing interval');
+    clearInterval(intervalId);
+    console.log('intervalId cleared');
+    intervalId = null;
+    console.log('intervalId set to null');
+  } else {
+    console.log('intervalId is falsy');
+  }
+  // Convert the input value to a Date object
+
+  const spanElement = document.querySelector('span[data-days]');
   const futureDateMs = new Date(inputDate.value).getTime();
   const currentDateMs = Date.now();
   let ticker = futureDateMs - currentDateMs;
 
-  const intervalId = setInterval(() => {
+  intervalId = setInterval(() => {
     ticker -= 1000;
+    const timeParts = convertMs(ticker);
     console.log(ticker);
     console.log('tickerId:', convertMs(ticker));
+
+    // Update the span elements with the time parts
+    spanElementValue[0].textContent = timeParts.days;
+    spanElementValue[1].textContent = timeParts.hours;
+    spanElementValue[2].textContent = timeParts.minutes;
+    spanElementValue[3].textContent = timeParts.seconds;
     // Check condition to end the interval
     if (ticker <= 0) {
+      console.log('ticker is <= 0, ending the interval');
       clearInterval(intervalId); // End the interval
+      intervalId = null;
+    } else {
+      console.log('ticker is > 0, continuing the interval');
     }
   }, 1000);
 });
 
 // functions
 
-function intervalId(ms) {
-  setInterval(() => {
-    convertMs(ms);
-  }, 1000);
-}
+// function intervalId(ms) {
+//   setInterval(() => {
+//     const convert = convertMs(ms);
+//   }, 1000);
+// }
 
 function isFutureDate(date) {
   console.log('Checking if the given date is in the future');
