@@ -1,3 +1,8 @@
+// Described in documentation
+import flatpickr from 'flatpickr';
+// Additional styles import
+import '/node_modules/flatpickr/dist/flatpickr.min.css';
+
 const inputDate = document.getElementById('datetime-picker');
 const buttonStart = document.querySelector('button[data-start]');
 const spanElementValue = document.getElementsByClassName('value');
