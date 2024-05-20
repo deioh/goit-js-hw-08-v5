@@ -1,9 +1,13 @@
-import Notiflix from 'notiflix';
-
 const inputDate = document.getElementById('datetime-picker');
 const buttonStart = document.querySelector('button[data-start]');
 const spanElementValue = document.getElementsByClassName('value');
 buttonDisabled(true);
+
+Notiflix.Confirm.init({
+  width: '320px',
+  messageMaxLength: 1923,
+  plainText: true,
+});
 
 // Set up options for the flatpickr date picker
 const options = {
